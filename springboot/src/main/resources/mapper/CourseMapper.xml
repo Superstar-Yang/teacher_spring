@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.CourseMapper">
+
+    <insert id="insert" parameterType="com.example.entity.Course" useGeneratedKeys="true">
+        insert into course(name, content,score,teacher_id,num,time,location,college_id)
+        values (#{name},#{ content},#{score},#{teacher_id},#{num},#{time},#{location},#{college_id})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Course">
+        update course set name = #{name}, content = #{content},score=#{score},teacher_id=#{teacher_id},num=#{num},time=#{time},location=#{location},college_id=#{college_id}
+        where id = #{id}
+    </update>
+    <select id="selectAll" resultType="com.example.entity.Course">
+        select course.*,teacher.name ad teacherName,college.name as collegeName from course
+        left join teacher_info on teacher_info.id = course.teacherId
+        left join college on college.id = course.collegeId
+        <where>
+            <if test="name !=null"> and name like concat('%',#{name},'%')</if>
+        </where>
+        order by course.id desc
+    </select>
+
+</mapper>

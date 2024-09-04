@@ -52,6 +52,18 @@
               <el-icon><User /></el-icon>
               <span>公告信息</span>
             </el-menu-item>
+            <el-menu-item index="/college">
+              <el-icon><User /></el-icon>
+              <span>学院信息</span>
+            </el-menu-item>
+            <el-menu-item index="/speciality">
+              <el-icon><User /></el-icon>
+              <span>专业信息</span>
+            </el-menu-item>
+            <el-menu-item index="/course">
+              <el-icon><User /></el-icon>
+              <span>课程信息</span>
+            </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-if="data.user.role === 'ADMIN'" index="/person"><el-icon><User /></el-icon><span>个人资料</span></el-menu-item>
           <el-menu-item v-if="data.user.role === 'TEACHER'" index="/tPerson"><el-icon><User /></el-icon><span>个人资料</span></el-menu-item>
