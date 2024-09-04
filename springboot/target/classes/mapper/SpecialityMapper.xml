@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SpecialityMapper">
+
+<!--    <select id="selectAll" resultType="com.example.entity.Speciality">-->
+<!--        select * from speciality-->
+<!--        <where>-->
+<!--            <if test="title !=null">and title like concat ('%', #{title} ,'%')</if>-->
+<!--        </where>-->
+<!--        order by id desc-->
+<!--    </select>-->
+
+    <insert id="insert" parameterType="com.example.entity.Speciality" useGeneratedKeys="true">
+        insert into speciality(id, name, college_id)
+        values (#{id}, #{name}, #{collegeId})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Speciality">
+        update speciality set name = #{name}, college_id = #{collegeId}
+        where id = #{id}
+    </update>
+    <select id="selectAll" resultType="com.example.entity.Speciality">
+        select speciality.*,college.name as collegeName from speciality
+        left join college on speciality.college_id=college.id
+        <where>
+            <if test="name !=null">and speciality.name like concat('%',#{name},'%')</if>
+        </where>
+        order by speciality.id desc
+    </select>
+
+</mapper>
