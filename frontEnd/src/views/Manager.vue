@@ -25,7 +25,7 @@
             <el-icon><HomeFilled /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
-          <el-sub-menu index="2">
+          <el-sub-menu index="2" v-if="data.user.role === 'ADMIN'">
             <template #title>
               <el-icon><Memo /></el-icon>
               <span>用户管理</span>
@@ -48,7 +48,7 @@
               <el-icon><Memo /></el-icon>
               <span>信息管理</span>
             </template>
-            <el-menu-item index="/notice">
+            <el-menu-item index="/notice" v-if="data.user.role === 'ADMIN'">
               <el-icon><User /></el-icon>
               <span>公告信息</span>
             </el-menu-item>
@@ -63,6 +63,10 @@
             <el-menu-item index="/course">
               <el-icon><User /></el-icon>
               <span>课程信息</span>
+            </el-menu-item>
+            <el-menu-item index="/choose">
+              <el-icon><User /></el-icon>
+              <span>选课信息</span>
             </el-menu-item>
           </el-sub-menu>
           <el-menu-item v-if="data.user.role === 'ADMIN'" index="/person"><el-icon><User /></el-icon><span>个人资料</span></el-menu-item>

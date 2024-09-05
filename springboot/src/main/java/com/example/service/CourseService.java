@@ -1,6 +1,5 @@
 package com.example.service;
 
-import cn.hutool.core.date.DateUtil;
 import com.example.entity.Course;
 import com.example.mapper.CourseMapper;
 import com.github.pagehelper.PageHelper;
@@ -23,7 +22,7 @@ public class CourseService {
      * 新增
      */
     public void add(Course course) {
-        course.setTime(DateUtil.now());
+        course.setAlreadyNum(0);
         courseMapper.insert(course);
     }
 

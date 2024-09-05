@@ -25,7 +25,7 @@
         select speciality.*,college.name as collegeName from speciality
         left join college on speciality.college_id=college.id
         <where>
-            <if test="name !=null">and speciality.name like concat('%',#{name},'%')</if>
+            <if test="name !=null"> and speciality.name like concat('%',#{name},'%')</if>
         </where>
         order by speciality.id desc
     </select>

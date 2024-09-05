@@ -9,13 +9,13 @@
     </div>
 
     <div class="card" style="margin-bottom: 5px">
-      <div style="margin-bottom: 10px">
+      <div style="margin-bottom: 10px" v-if="data.user.role === 'ADMIN'">
         <el-button type="primary" @click="handleAdd">新增</el-button>
       </div>
       <el-table :data="data.tableData" stripe>
         <el-table-column label="名称" prop="name" />
         <el-table-column label="所属学院" prop="collegeName" />
-        <el-table-column label="操作" align="center" width="160">
+        <el-table-column label="操作" align="center" width="160" v-if="data.user.role === 'ADMIN'">
           <template #default="scope">
             <el-button type="primary" @click="handleEdit(scope.row)">编辑</el-button>
             <el-button type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
@@ -70,7 +70,8 @@ const data = reactive({
   form: {},
   tableData: [],
   name: null,
-  collegeList:[]
+  collegeList:[],
+  user: JSON.parse(localStorage.getItem('system-user') || '{}')
 })
 
 // 分页查询

@@ -22,7 +22,7 @@
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="学号" prop="code"></el-table-column>
         <el-table-column label="学分" prop="score"></el-table-column>
-        <el-table-column label="所属学院" prop="collegeId"></el-table-column>
+        <el-table-column label="所属学院" prop="collegeName"></el-table-column>
         <el-table-column label="角色" prop="role">
           <template #default="scope">
             <span v-if="scope.row.role === 'ADMIN'">管理员</span>
@@ -70,15 +70,15 @@
         </el-form-item>
         <el-form-item label="所属学院" prop="collegeId">
           <el-select
-              v-model="data.form.field"
+              v-model="data.form.collegeId"
               clearable
               placeholder="请选择所属学院"
           >
             <el-option
-                v-for="item in data.form.specialityIdList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in data.collegeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
             />
           </el-select>
         </el-form-item>
@@ -123,7 +123,9 @@ const data = reactive({
   formVisible: false,
   form: {},
   tableData: [],
-  name: null
+  name: null,
+  collegeList:[],
+  roleList:[]
 })
 
 // 分页查询
@@ -215,5 +217,13 @@ const currentChange = (num,size)=>{
   load()
 }
 
+const getCourseData = ()=>{
+  request.get('/college/selectAll').then(res=>{
+    console.log(res)
+    data.collegeList = res.data
+  })
+}
+
 load()
+getCourseData()
 </script>

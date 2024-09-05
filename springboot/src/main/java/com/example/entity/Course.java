@@ -5,29 +5,15 @@ public class Course {
     private String name;
     private String content;
     private Integer score;
-    private String teacherId;
+    private Integer teacherId;
     private Integer num;
     private String time;
     private String location;
     private Integer collegeId;
     private String collegeName;
     private String teacherName;
-
-    public String getCollegeName() {
-        return collegeName;
-    }
-
-    public void setCollegeName(String collegeName) {
-        this.collegeName = collegeName;
-    }
-
-    public String getTeacherName() {
-        return teacherName;
-    }
-
-    public void setTeacherName(String teacherName) {
-        this.teacherName = teacherName;
-    }
+    private Integer alreadyNum;
+    private Integer studentId;
 
     public Integer getId() {
         return id;
@@ -61,11 +47,11 @@ public class Course {
         this.score = score;
     }
 
-    public String getTeacherId() {
+    public Integer getTeacherId() {
         return teacherId;
     }
 
-    public void setTeacherId(String teacherId) {
+    public void setTeacherId(Integer teacherId) {
         this.teacherId = teacherId;
     }
 
@@ -99,5 +85,37 @@ public class Course {
 
     public void setCollegeId(Integer collegeId) {
         this.collegeId = collegeId;
+    }
+
+    public String getCollegeName() {
+        return collegeName;
+    }
+
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public Integer getAlreadyNum() {
+        return alreadyNum;
+    }
+
+    public void setAlreadyNum(Integer alreadyNum) {
+        this.alreadyNum = alreadyNum;
+    }
+
+    public Integer getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(Integer studentId) {
+        this.studentId = studentId;
     }
 }

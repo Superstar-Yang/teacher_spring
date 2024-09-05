@@ -5,8 +5,8 @@
 <mapper namespace="com.example.mapper.StudentMapper">
 
     <insert id="insert" parameterType="com.example.entity.Student">
-        insert into student (name, username, password, avatar, sex, code, role)
-        values (#{name}, #{username}, #{password}, #{avatar}, #{sex}, #{code}, #{role})
+        insert into student (name, username, password, avatar, sex, code, role,college_id,score)
+        values (#{name}, #{username}, #{password}, #{avatar}, #{sex}, #{code}, #{role},#{collegeId},#{score})
     </insert>
     <update id="updateById" parameterType="com.example.entity.Student">
         update student
@@ -16,14 +16,16 @@
             avatar=#{avatar},
             sex=#{sex},
             code=#{code},
-            role=#{role}
+            role=#{role},
+            college_id=#{collegeId},
+            score=#{score}
         where id = #{id}
     </update>
     <select id="selectAll" resultType="com.example.entity.Student">
-        select * from student
+        select student.*,college.name as collegeName from student left join college on college.id=student.college_id
         <where>
             <if test="name !=null">and name like concat ('%',#{name},'%')</if>
         </where>
-        order by id desc
+        order by student.id desc
     </select>
 </mapper>

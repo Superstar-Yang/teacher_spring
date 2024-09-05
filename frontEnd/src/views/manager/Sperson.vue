@@ -4,24 +4,35 @@
       <el-form :model="data.user" label-width="100px" style="padding-right: 50px">
         <div style="margin: 20px 0; text-align: center">
           <el-upload :show-file-list="false" class="avatar-uploader" :action="uploadUrl" :on-success="handleFileUpload">
-            <img v-if="data.user.avatar" :src="data.user.avatar" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            <img v-if="data.user.avatar" :src="data.user.avatar" class="avatar"/>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus/>
+            </el-icon>
           </el-upload>
         </div>
         <el-form-item label="账号">
-          <el-input disabled v-model="data.user.username" autocomplete="off" />
+          <el-input disabled v-model="data.user.username" autocomplete="off"/>
         </el-form-item>
         <el-form-item label="名称">
-          <el-input v-model="data.user.name" autocomplete="off" />
+          <el-input v-model="data.user.name" autocomplete="off"/>
         </el-form-item>
-        <el-form-item label="学院名称">
-          <el-input v-model="data.user.collegeName" autocomplete="off" />
+        <el-form-item label="学院名称" prop="collegeId">
+          <el-select v-model="data.user.collegeId">
+            <el-option
+                v-for="item in data.collegeList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+            >
+
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="学号">
-          <el-input v-model="data.user.code" autocomplete="off" :disabled="data.user.role === 'ADMIN'?'true':'false'" />
+          <el-input v-model="data.user.code" autocomplete="off" :disabled="data.user.role === 'ADMIN'"/>
         </el-form-item>
         <el-form-item label="学分">
-          <el-input v-model="data.user.score" autocomplete="off" :disabled="data.user.role === 'ADMIN'?'true':'false'" />
+          <el-input v-model="data.user.score" autocomplete="off" :disabled="data.user.role === 'ADMIN'"/>
         </el-form-item>
         <div style="text-align: center">
           <el-button type="primary" @click="save">保存</el-button>
@@ -41,6 +52,7 @@ const uploadUrl = import.meta.env.VITE_BASE_URL + '/files/upload'
 
 const data = reactive({
   user: JSON.parse(localStorage.getItem('system-user') || '{}'),
+  collegeList: []
 })
 
 const handleFileUpload = (file) => {
@@ -50,17 +62,29 @@ const handleFileUpload = (file) => {
 const emit = defineEmits(["updateUser"])
 // 把当前修改的用户信息存储到后台数据库
 const save = () => {
-    request.put('/student/update', data.user).then(res => {
-      if (res.status === 200) {
-        ElMessage.success('更新成功')
-        //把更新后的用户信息存储到缓存
-        localStorage.setItem('system-user', JSON.stringify(data.user))
-        emit('updateUser')
-      } else {
-        ElMessage.error(res.statusText)
-      }
-    })
+  request.put('/student/update', {
+    params: {
+      ...data.user,
+      collegeId: data.user.collegeId
+    }
+  }).then(res => {
+    if (res.status === 200) {
+      ElMessage.success('更新成功')
+      //把更新后的用户信息存储到缓存
+      localStorage.setItem('system-user', JSON.stringify(data.user))
+      emit('updateUser')
+    } else {
+      ElMessage.error(res.statusText)
+    }
+  })
 }
+
+const getCollegeData  =()=>{
+  request.get('/college/selectAll').then(res=>{
+    data.collegeList = res.data
+  })
+}
+getCollegeData()
 
 </script>
 

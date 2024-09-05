@@ -11,12 +11,14 @@ public class Student extends Account{
     public String sex;
     private String username;
     private String code;
+    private String collegeName;
 
     @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
@@ -101,5 +103,13 @@ public class Student extends Account{
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public String getCollegeName() {
+        return collegeName;
+    }
+
+    public void setCollegeName(String collegeName) {
+        this.collegeName = collegeName;
     }
 }

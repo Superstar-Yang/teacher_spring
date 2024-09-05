@@ -5,20 +5,21 @@
 <mapper namespace="com.example.mapper.CourseMapper">
 
     <insert id="insert" parameterType="com.example.entity.Course" useGeneratedKeys="true">
-        insert into course(name, content,score,teacher_id,num,time,location,college_id)
-        values (#{name},#{ content},#{score},#{teacher_id},#{num},#{time},#{location},#{college_id})
+        insert into course(name, content,score,teacher_id,num,time,location,college_id,alreday_num,student_id)
+        values (#{name},#{content},#{score},#{teacherId},#{num},#{time},#{location},#{collegeId},#{alreadyNum},#{studentId})
     </insert>
 
     <update id="updateById" parameterType="com.example.entity.Course">
-        update course set name = #{name}, content = #{content},score=#{score},teacher_id=#{teacher_id},num=#{num},time=#{time},location=#{location},college_id=#{college_id}
+        update course set name = #{name}, content = #{content},score=#{score},teacher_id=#{teacherId},num=#{num},time=#{time},location=#{location},college_id=#{collegeId},already_num=#{alreadyNum},student_id=#{studentId}
         where id = #{id}
     </update>
     <select id="selectAll" resultType="com.example.entity.Course">
-        select course.*,teacher.name ad teacherName,college.name as collegeName from course
-        left join teacher_info on teacher_info.id = course.teacherId
-        left join college on college.id = course.collegeId
+        select course.*,teacher_info.name as teacherName,college.name as collegeName from course
+        left join teacher_info on teacher_info.id = course.teacher_id
+        left join college on college.id = course.college_id
         <where>
-            <if test="name !=null"> and name like concat('%',#{name},'%')</if>
+            <if test="name !=null">and course.name like concat('%',#{name},'%')</if>
+            <if test="teacherId !=null">and course.teacher_id = #{teacherId}</if>
         </where>
         order by course.id desc
     </select>

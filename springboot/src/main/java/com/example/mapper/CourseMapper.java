@@ -2,6 +2,7 @@ package com.example.mapper;
 
 import com.example.entity.Course;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -27,4 +28,7 @@ public interface CourseMapper {
     int updateById(Course course);
 
     List<Course> selectAll(Course course);
+
+    @Select("select * from course where id=#{courseId}")
+    Course selectById(Integer courseId);
 }
