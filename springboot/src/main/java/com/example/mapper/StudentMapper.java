@@ -22,4 +22,7 @@ public interface StudentMapper {
     @Select("select * from student where username = #{username}")
     Student selectByUsername(String username);
 
+
+
+    Student selectById(Integer id);
 }

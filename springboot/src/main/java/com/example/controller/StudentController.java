@@ -39,6 +39,12 @@ public class StudentController {
         return Result.success(list);
     }
 
+    @GetMapping("/selectById/{id}")
+    public Result selectById(@PathVariable Integer id) {
+        Student student = studentService.selectById(id);
+        return Result.success(student);
+    }
+
     @GetMapping("/selectPage")
     public Result selectPage(Student student, @RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
         PageInfo<Student> list = studentService.selectPage(student, pageNum, pageSize);

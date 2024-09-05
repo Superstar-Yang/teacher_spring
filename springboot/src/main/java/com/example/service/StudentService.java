@@ -79,4 +79,8 @@ public class StudentService {
         student.setPassword(account.getPassword());
         insert(student);
     }
+
+    public Student selectById(Integer id) {
+        return studentMapper.selectById(id);
+    }
 }

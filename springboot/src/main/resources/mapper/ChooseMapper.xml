@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ChooseMapper">
+
+    <insert id="insert" parameterType="com.example.entity.Choose" useGeneratedKeys="true">
+        insert into choose(name, student_id,teacher_id,course_id)
+        values (#{name}, #{studentId},#{teacherId},#{courseId})
+    </insert>
+
+    <update id="updateById" parameterType="com.example.entity.Choose">
+        update choose set name = #{name}, student_id = #{studentId},teacher_id = #{teacherId},course_id = #{courseId}
+        where id = #{id}
+    </update>
+    <select id="selectAll" resultType="com.example.entity.Choose">
+        select choose.*, student.name as studentName,teacher_info.name as teacherName,course.name as courseName from choose
+        left join student on student.id = choose.student_id
+        left join teacher_info on teacher_info.id = choose.teacher_id
+        left join course on course.id = choose.course_id
+        <where>
+            <if test="name !=null"> and choose.name like concat('%',#{name},'%')</if>
+            <if test="teacherId !=null"> and choose.teacher_id = #{teacherId} </if>
+            <if test="studentId !=null"> and choose.student_id =  #{studentId}</if>
+        </where>
+        order by id desc
+    </select>
+
+</mapper>

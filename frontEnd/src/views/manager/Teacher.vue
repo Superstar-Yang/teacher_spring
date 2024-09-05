@@ -21,7 +21,7 @@
         <el-table-column label="姓名" prop="name"></el-table-column>
         <el-table-column label="性别" prop="sex"></el-table-column>
         <el-table-column label="职位" prop="title"></el-table-column>
-        <el-table-column label="所属专业" prop="fieldId"></el-table-column>
+        <el-table-column label="所属专业" prop="specialityName"></el-table-column>
         <el-table-column label="角色" prop="role">
           <template #default="scope">
             <span v-if="scope.row.role === 'ADMIN'">管理员</span>
@@ -61,35 +61,29 @@
             <el-radio value="女" size="small">女</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="职位" prop="title">
-          <el-input v-model="data.form.title" autocomplete="off" />
-        </el-form-item>
         <el-form-item label="所属专业" prop="fieldId">
           <el-select
-              v-model="data.form.field"
+              v-model="data.form.fieldId"
               clearable
               placeholder="请选择所属专业"
           >
             <el-option
-                v-for="item in data.form.specialityIdList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
+                v-for="item in data.specialityIdList"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
             />
           </el-select>
         </el-form-item>
-        <el-form-item label="角色" prop="role">
+        <el-form-item label="职位" prop="title">
           <el-select
-              v-model="value"
+              v-model="data.form.title"
               clearable
-              placeholder="请选择角色"
+              placeholder="请选择职位"
           >
-            <el-option
-                v-for="item in data.form.roleList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            />
+            <el-option label="讲师" value="讲师"></el-option>
+            <el-option label="副教授" value="副教授"></el-option>
+            <el-option label="教授" value="教授"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
@@ -119,7 +113,8 @@ const data = reactive({
   formVisible: false,
   form: {},
   tableData: [],
-  username: null
+  username: null,
+  specialityIdList:[],
 })
 
 // 分页查询
@@ -211,5 +206,12 @@ const currentChange = (num,size)=>{
   load()
 }
 
+const getSpecialityData = ()=>{
+  request.get('/speciality/selectAll').then(res=>{
+    data.specialityIdList = res.data
+  })
+}
+
 load()
+getSpecialityData()
 </script>

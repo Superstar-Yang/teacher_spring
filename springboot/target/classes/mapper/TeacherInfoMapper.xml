@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.TeacherInfoMapper">
     <insert id="insert" parameterType="com.example.entity.TeacherInfo">
-        insert into teacher_info (username, password, sex, name, title, avatar, role)
-        values (#{username}, #{password}, #{sex}, #{name}, #{title}, #{avatar}, #{role})
+        insert into teacher_info (username, password, sex, name, title, avatar, role,field_id)
+        values (#{username}, #{password}, #{sex}, #{name}, #{title}, #{avatar}, #{role},#{fieldId})
     </insert>
     <update id="updateById">
         update teacher_info
@@ -15,7 +15,8 @@
             name     = #{name},
             title    = #{title},
             avatar   = #{avatar},
-            role=#{role}
+            role=#{role},
+            field_id=#{fieldId}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -25,10 +26,11 @@
     </delete>
 
     <select id="selectAll" resultType="com.example.entity.TeacherInfo">
-        select * from teacher_info
+        select teacher_info.*,speciality.name as specialityName from teacher_info
+        left join speciality on speciality.id = teacher_info.field_id
         <where>
-            <if test="username != null"> and username like concat ('%',#{username},'%')</if>
+            <if test="username != null"> and teacher_info.username like concat ('%',#{username},'%')</if>
         </where>
-        order by id desc
+        order by teacher_info.id desc
     </select>
 </mapper>

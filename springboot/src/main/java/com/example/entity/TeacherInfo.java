@@ -9,15 +9,7 @@ public class TeacherInfo extends Account {
     private String title;
     private Integer fieldId;
     private String avatar;
-
-    public Integer getFieldId() {
-        return fieldId;
-    }
-
-    public void setFieldId(Integer fieldId) {
-        this.fieldId = fieldId;
-    }
-
+    private String specialityName;
     private String role;
 
     @Override
@@ -94,5 +86,23 @@ public class TeacherInfo extends Account {
     @Override
     public void setUsername(String username) {
         this.username = username;
+    }
+
+
+    public String getSpecialityName() {
+        return specialityName;
+    }
+
+
+    public void setSpecialityName(String specialityName) {
+        this.specialityName = specialityName;
+    }
+
+    public Integer getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(Integer fieldId) {
+        this.fieldId = fieldId;
     }
 }

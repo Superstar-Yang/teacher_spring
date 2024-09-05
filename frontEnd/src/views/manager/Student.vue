@@ -69,32 +69,7 @@
           <el-input v-model="data.form.score" autocomplete="off" />
         </el-form-item>
         <el-form-item label="所属学院" prop="collegeId">
-          <el-select
-              v-model="data.form.collegeId"
-              clearable
-              placeholder="请选择所属学院"
-          >
-            <el-option
-                v-for="item in data.collegeList"
-                :key="item.id"
-                :label="item.name"
-                :value="item.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="角色" prop="role">
-          <el-select
-              v-model="data.form.role"
-              clearable
-              placeholder="请选择角色"
-          >
-            <el-option
-                v-for="item in data.form.roleList"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-            />
-          </el-select>
+          <el-input v-model="data.form.collegeId" autocomplete="off" />
         </el-form-item>
       </el-form>
       <template #footer>
@@ -217,7 +192,7 @@ const currentChange = (num,size)=>{
   load()
 }
 
-const getCourseData = ()=>{
+const getCollegeData = ()=>{
   request.get('/college/selectAll').then(res=>{
     console.log(res)
     data.collegeList = res.data
@@ -225,5 +200,5 @@ const getCourseData = ()=>{
 }
 
 load()
-getCourseData()
+getCollegeData()
 </script>
